@@ -33,3 +33,12 @@ class UserChangeForm(forms.ModelForm):
 
 
 
+
+class UserRegistrationForm(forms.Form):
+    phone_number = forms.CharField(widget=forms.TextInput)
+    full_name = forms.CharField(widget=forms.TextInput)
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+
