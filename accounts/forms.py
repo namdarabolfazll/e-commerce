@@ -40,5 +40,6 @@ class UserRegistrationForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-
+class verifyCodeForm(forms.Form):
+    code = forms.IntegerField(widget=forms.TextInput)
 
