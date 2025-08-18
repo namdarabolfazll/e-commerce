@@ -40,6 +40,20 @@ class UserRegistrationForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data['phone_number']
+        user = User.objects.filter(phone_number=phone_number).exists()
+        if user :
+            raise ValidationError("Phone number already in use")
+        return phone_number
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        user = User.objects.filter(email=email).exists()
+        if user :
+            raise ValidationError("Email already in use")
+        return email
+
 class verifyCodeForm(forms.Form):
     code = forms.IntegerField(widget=forms.TextInput)
 

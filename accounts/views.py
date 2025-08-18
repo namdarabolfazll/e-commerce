@@ -1,11 +1,12 @@
 import email
-from random import random
+import random
 
 from django.contrib import messages
 from django.shortcuts import render , redirect
 from django.views import View
 from django.views.generic import FormView
 
+from utils import send_otp_code
 from .forms import UserRegistrationForm, verifyCodeForm
 from .models import OtpCode, User
 
@@ -21,6 +22,7 @@ class UserRegisterView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             random_code = random.randint(100000, 999999)
+            send_otp_code(form.cleaned_data['phone_number'], random_code)
             OtpCode.objects.create(phone_number=form.cleaned_data['phone_number'], code=random_code)
             request.session['user_registration_info'] = {
                 'phone_number': form.cleaned_data['phone_number'],
@@ -31,7 +33,7 @@ class UserRegisterView(View):
             }
             messages.success(request, 'Thank you for registering. You can now login.')
             return redirect('accounts:verify_code')
-        return redirect('home:home')
+        return render(request , 'accounts/register.html' , {'form':form})
 
 
 class UserRegisterVerifyCodeView(View):

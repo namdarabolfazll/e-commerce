@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'accounts.apps.AccountConfig',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -119,8 +120,22 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+#media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
+
+
+# ARVAN CLOUD STORAGE
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+AWS_ACCESS_KEY_ID = 'd647ce55-b118-4677-b347-eb22183198bf'
+AWS_SECRET_ACCESS_KEY = 'b4afd12e7104ce582c1800e21654308986ae7467154988076b94c0709eb423d6'
+AWS_ENDPOINT_URL = 's3.ir-thr-at1.arvanstorage.ir'
+AWS_STORAGE_BUCKET_NAME = 'dajngo-shope'
+AWS_SERVICE_NAME = 's3'
+AWS_S3_OVERWRITE = False
